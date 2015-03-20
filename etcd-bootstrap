@@ -2,13 +2,11 @@
 
 set -e
 
-this_ip="$1"
-this_machine="$2"
+this_ip="$1"; shift
+this_machine="$1"; shift
+consul_args="$@"
 
 etcdctl="docker run --net=host --rm cap10morgan/etcdctl:0.4.6"
-fleetctl="docker run --net=host --rm cap10morgan/fleetctl:0.8.3"
-
-bootstrap_expect=$(${fleetctl} list-machines | grep -v IP | wc -l)
 
 ${etcdctl} set /consul.io/bootstrap/machines/${this_machine} ${this_ip} > /dev/null
 
@@ -17,8 +15,9 @@ first_node=${nodes[0]}
 
 if [[ -n "${first_node}" ]]; then
   join_ip=$(${etcdctl} get ${first_node})
+  join_arg="--join ${join_ip}"
   if [[ "${join_ip}" == "${this_ip}" ]]; then
-    join_ip=""
+    join_arg=""
   fi
 fi
 
@@ -27,8 +26,4 @@ if [[ -n "${join_ip}" ]]; then
   ip_args="${ip_args}::${join_ip}"
 fi
 
-printf -v cmd '$(docker run --rm progrium/consul cmd:run %s -v /var/lib/consul:/data -p ${this_ip}:53:53/udp)' "${ip_args}"
-
-docker pull progrium/consul
-
-exec /bin/bash -c "${cmd}"
+exec /bin/start --server --advertise ${this_ip} ${join_arg} $@

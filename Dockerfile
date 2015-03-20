@@ -1,9 +1,9 @@
-FROM progrium/docker
+FROM progrium/consul:latest
 MAINTAINER Wes Morgan <cap10morgan@gmail.com>
 
-RUN opkg-install bash
-ENV SHELL /bin/bash
+ENV GOMAXPROCS 10
 
-ADD etcd-bootstrap /bin/etcd-bootstrap
+COPY ./etcd-bootstrap /bin/etcd-bootstrap
+
 ENTRYPOINT ["/bin/etcd-bootstrap"]
 CMD []

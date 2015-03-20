@@ -1,0 +1,25 @@
+[Unit]
+Description=Consul
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=0
+
+ExecStartPre=/usr/bin/mkdir -p /var/lib/consul
+ExecStartPre=/usr/bin/mkdir -p /etc/systemd/resolved.conf.d
+ExecStartPre=-/usr/bin/docker kill consul
+ExecStartPre=-/usr/bin/docker rm consul
+ExecStartPre=/usr/bin/docker pull cap10morgan/consul-coreos:2015032005
+
+ExecStart=/bin/bash -c 'MACHINE_ID=$(</etc/machine-id); /usr/bin/docker run --name consul --volume /var/run/docker.sock:/var/run/docker.sock --volume /var/lib/consul:/data -p 8300:8300 -p 8301:8301 -p 8301:8301/udp -p 8302:8302 -p 8302:8302/udp -p 8400:8400 -p 8500:8500 -p 53:8600/udp cap10morgan/consul-coreos:2015032005 ${COREOS_PRIVATE_IPV4} $${MACHINE_ID}'
+
+ExecStartPost=/bin/bash -c 'sleep 1; echo -e "[Resolve]\nDNS=$(docker inspect --format \'{{ .NetworkSettings.IPAddress }}\' consul)" > /etc/systemd/resolved.conf.d/consul-dns.conf && systemctl restart systemd-resolved'
+
+ExecStop=/usr/bin/docker stop consul
+ExecStopPost=/bin/bash -c 'rm /etc/systemd/resolved.conf.d/consul-dns.conf && systemctl restart systemd-resolved'
+ExecStopPost=/bin/bash -c 'MACHINE_ID=$(</etc/machine-id); /usr/bin/etcdctl rm /consul.io/bootstrap/machines/$${MACHINE_ID}'
+
+[X-Fleet]
+Conflicts=consul@*.service
