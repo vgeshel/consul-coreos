@@ -20,6 +20,8 @@ fleetctl start consul@2
 ... as many more as you want
 ```
 
+Fleet will run one Consul container per CoreOS node, so you probably want to start a consul@N up to the number of CoreOS nodes in your cluster. Although be aware that currently this runs all of them as Consul servers, which is not recommended past a ceratin cluster size (some of them should start being run as clients past a certain number of nodes). Pull requests welcome!
+
 ## Implementation
 
 It uses etcd to coordinate the bootstrapping of a Consul cluster on CoreOS. It runs Consul inside Docker containers (as nature intended) using [progrium's excellent Consul Docker image](https://github.com/progrium/docker-consul).
