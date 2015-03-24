@@ -15,15 +15,13 @@ first_node=${nodes[0]}
 
 if [[ -n "${first_node}" ]]; then
   join_ip=$(${etcdctl} get ${first_node})
-  join_arg="--join ${join_ip}"
   if [[ "${join_ip}" == "${this_ip}" ]]; then
     join_arg=""
+  else
+    join_arg="--join ${join_ip}"
   fi
 fi
 
 ip_args="${this_ip}"
-if [[ -n "${join_ip}" ]]; then
-  ip_args="${ip_args}::${join_ip}"
-fi
 
 exec /bin/start --server --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
