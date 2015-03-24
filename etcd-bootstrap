@@ -26,4 +26,4 @@ if [[ -n "${join_ip}" ]]; then
   ip_args="${ip_args}::${join_ip}"
 fi
 
-exec /bin/start --server --advertise ${this_ip} ${join_arg} $@
+exec /bin/start --server --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
