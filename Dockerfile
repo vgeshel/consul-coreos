@@ -1,5 +1,5 @@
 FROM progrium/consul:latest
-MAINTAINER Wes Morgan <cap10morgan@gmail.com>
+MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
 ENV GOMAXPROCS 10
 
