@@ -2,6 +2,12 @@
 
 set -e
 
+function leave-cluster {
+  consul leave
+}
+
+trap leave-cluster EXIT
+
 this_ip="$1"; shift
 this_machine="$1"; shift
 consul_args="$@"
@@ -24,4 +30,4 @@ fi
 
 ip_args="${this_ip}"
 
-exec /bin/start --server --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
+/bin/start --server --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
