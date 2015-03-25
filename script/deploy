@@ -18,7 +18,7 @@ fi
 IMAGE_TAG=$(echo $DOCKER_IMAGE | awk -F: '{print $2}')
 
 echo '--- updating fleet service template'
-sed -i '' "s/^Environment=VERSION=.*$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
+perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
 if [[ $CI = "true" ]]; then
   fleetctl="docker run --net=host --rm $FLEETCTL_TUNNEL_ARG cap10morgan/fleetctl:0.9.1"
 else
