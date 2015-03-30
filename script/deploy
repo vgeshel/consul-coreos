@@ -20,10 +20,6 @@ IMAGE_TAG=$(echo $DOCKER_IMAGE | awk -F: '{print $2}')
 echo '--- updating fleet service template'
 perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
 
-if [[ "${CI}" = "true" ]]; then
-  export FLEETCTL_ENDPOINT="http://${COREOS_PRIVATE_IPV4}:4001"
-fi
-
 fleetctl destroy consul@.service
 fleetctl submit consul@.service
 
