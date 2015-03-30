@@ -21,7 +21,7 @@ echo '--- updating fleet service template'
 perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
 
 if [[ "${CI}" = "true" ]]; then
-  FLEETCTL_TUNNEL=${COREOS_PRIVATE_IPV4}
+  export FLEETCTL_TUNNEL=${COREOS_PRIVATE_IPV4}
 fi
 
 fleetctl destroy consul@.service
