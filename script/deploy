@@ -25,6 +25,8 @@ else
   fleetctl="fleetctl"
 fi
 
+echo "fleet command: ${fleetctl}"
+
 $fleetctl destroy consul@.service
 $fleetctl submit consul@.service
 
