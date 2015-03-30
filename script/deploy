@@ -20,7 +20,7 @@ IMAGE_TAG=$(echo $DOCKER_IMAGE | awk -F: '{print $2}')
 echo '--- updating fleet service template'
 perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
 if [[ $CI = "true" ]]; then
-  fleetctl="docker run --net=host --rm cap10morgan/fleetctl:0.9.1"
+  fleetctl="docker run --net=host --rm --volume $(pwd):/data --workdir /data cap10morgan/fleetctl:0.9.1"
 else
   fleetctl="fleetctl"
 fi
