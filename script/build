@@ -42,5 +42,5 @@ fi
 
 echo '--- saving docker image tag'
 if hash buildkite-agent 2>/dev/null ; then
-  buildkite-agent build-data set docker-image "${DOCKER_REPO}:${IMAGE_TAG}"
+  buildkite-agent meta-data set docker-image "${DOCKER_REPO}:${IMAGE_TAG}"
 fi
