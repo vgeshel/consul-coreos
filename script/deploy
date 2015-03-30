@@ -26,7 +26,7 @@ else
 fi
 
 echo "fleet command: ${fleetctl}"
-docker run --net=host --rm --volume $(pwd):/data --workdir /data --entrypoint=ls cap10morgan/fleetctl:0.9.1 /data
+echo $(docker run --net=host --rm --volume $(pwd):/data --workdir /data --entrypoint=ls cap10morgan/fleetctl:0.9.1 /data)
 
 $fleetctl destroy consul@.service
 $fleetctl submit consul@.service
