@@ -5,8 +5,8 @@ set -e
 if [[ -z $DOCKER_IMAGE ]]; then
   if [[ -n $1 ]]; then
     DOCKER_IMAGE=$1
-  elif hash buildbox-agent 2>/dev/null; then
-    DOCKER_IMAGE=$(buildbox-agent build-data get docker-image)
+  elif hash buildkite-agent 2>/dev/null; then
+    DOCKER_IMAGE=$(buildkite-agent build-data get docker-image)
   fi
 fi
 
@@ -20,7 +20,7 @@ IMAGE_TAG=$(echo $DOCKER_IMAGE | awk -F: '{print $2}')
 echo '--- updating fleet service template'
 perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
 if [[ $CI = "true" ]]; then
-  fleetctl="docker run --net=host --rm $FLEETCTL_TUNNEL_ARG cap10morgan/fleetctl:0.9.1"
+  fleetctl="docker run --net=host --rm cap10morgan/fleetctl:0.9.1"
 else
   fleetctl="fleetctl"
 fi
