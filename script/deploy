@@ -28,4 +28,5 @@ for i in {1..3}; do
   fleetctl destroy consul@$i
   fleetctl start consul@$i
   # TODO: Use consul to see if consul@$i is healthy yet before moving on
+  sleep 10
 done
