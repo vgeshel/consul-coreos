@@ -24,7 +24,7 @@ ExecStart=/bin/bash -c 'docker run --name consul --volume /var/run/docker.sock:/
 ExecStartPost=/bin/bash -c 'sleep 1; echo -e "[Resolve]\nDNS=$(docker inspect --format \'{{ .NetworkSettings.IPAddress }}\' consul)" > /etc/systemd/resolved.conf.d/00-consul-dns.conf && systemctl restart systemd-resolved'
 
 ExecStop=/usr/bin/docker stop consul
-ExecStopPost=/bin/bash -c 'rm /etc/systemd/resolved.conf.d/0-consul-dns.conf && systemctl restart systemd-resolved'
+ExecStopPost=/bin/bash -c 'rm /etc/systemd/resolved.conf.d/00-consul-dns.conf && systemctl restart systemd-resolved'
 ExecStopPost=-/usr/bin/etcdctl rm /consul.io/bootstrap/machines/%m
 
 [X-Fleet]
