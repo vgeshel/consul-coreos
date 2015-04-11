@@ -18,6 +18,8 @@ function leave-cluster {
 
 trap leave-cluster EXIT
 
+${etcdctl} ls /consul.io/bootstrap/machines || ${etcdctl} mkdir /consul.io/bootstrap/machines
+
 nodes=( $(${etcdctl} ls /consul.io/bootstrap/machines) )
 
 if [[ ${#nodes[@]} > 0 ]]; then
