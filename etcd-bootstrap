@@ -10,8 +10,8 @@ etcdctl="docker run --net=host --rm cap10morgan/etcdctl:0.4.6"
 conntrack="docker run --net=host --privileged --rm cap10morgan/conntrack"
 
 function leave-cluster {
-  ${etcdctl} rm /consul.io/bootstrap/machines/${this_machine}
-  consul leave
+  ${etcdctl} rm /consul.io/bootstrap/machines/${this_machine} || true
+  consul leave || true
   # work around a Docker / Consul interaction bug that makes quickly-restarted containers not sync
   ${conntrack} -F
 }
