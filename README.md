@@ -10,7 +10,10 @@ This also allows you to run [Registrator](https://github.com/progrium/registrato
 
 ## Usage
 
-1. Clone this repo: `git clone https://github.com/cap10morgan/consul-coreos.git`
+1. Clone this repo: `git clone https://github.com/cap10morgan/consul-coreos.git`.
+1. Check if the file `/etc/environment` exists on your CoreOS machine(s).
+    1. On AWS and probably some other cloud environments it gets created automatically. But it will not exist if you're running CoreOS on bare metal, for example.
+    1. If it doesn't exist, create it like this: `echo 'COREOS_PRIVATE_IPV4=your.ip.address' > /etc/environment`
 1. Submit and run the included service file on your CoreOS cluster:
 
 ```
