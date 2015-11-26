@@ -20,12 +20,12 @@ IMAGE_TAG=$(echo $DOCKER_IMAGE | awk -F: '{print $2}')
 echo '--- updating fleet service template'
 perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" consul@.service
 
-fleetctl destroy consul@.service
+fleetctl destroy consul@.service || true # may not exist
 fleetctl submit consul@.service
 
 echo '--- (re-)starting fleet service instances'
 for i in {1..3}; do
-  fleetctl destroy consul@$i
+  fleetctl destroy consul@$i || true # may not exist
   fleetctl start consul@$i
   # TODO: Use consul to see if consul@$i is healthy yet before moving on
   sleep 30
