@@ -10,7 +10,7 @@ EnvironmentFile=/etc/environment
 TimeoutStartSec=0
 
 Environment=DOCKER_REPO=quay.io/democracyworks/consul-coreos
-Environment=VERSION=2015041102
+Environment=VERSION=0.5.2
 Environment=CONTAINER=consul
 
 # make sure /etc/systemd/resolved.conf.d dir exists so we can add Consul's DNS resolver to system
