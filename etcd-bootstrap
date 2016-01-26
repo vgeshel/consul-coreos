@@ -1,11 +1,11 @@
 #!/bin/bash
 
-set -e
+set -evx
 
 this_ip="$1"; shift
 this_machine="$1"; shift
 
-etcdctl="docker run --net=host --rm --entrypoint=/etcdctl quay.io/coreos/etcd:v2.1.2"
+etcdctl="docker run --net=host --rm --entrypoint=/etcdctl quay.io/coreos/etcd:v2.2.0"
 conntrack="docker run --net=host --privileged --rm cap10morgan/conntrack"
 
 function leave-cluster {

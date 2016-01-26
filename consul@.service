@@ -21,9 +21,10 @@ ExecStartPre=/usr/bin/docker pull ${DOCKER_REPO}:${VERSION}
 
 ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /opt/bin/docker.static:/bin/docker \
-  --net=host \
-  --env "CONSUL_ALLOW_PRIVILEGED_PORTS=1" \
+  --volume /var/run/consul/data:/data \
+  --hostname %H \
+  -p 8300:8300 -p 8301:8301 -p 8301:8301/udp -p 8302:8302 -p 8302:8302/udp \
+  -p 8400:8400 -p 8500:8500 -p 53:8600/udp \
   ${DOCKER_REPO}:${VERSION} ${COREOS_PRIVATE_IPV4} %m'
 
 ExecStop=/usr/bin/docker stop ${CONTAINER}
