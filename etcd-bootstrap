@@ -1,12 +1,12 @@
 #!/bin/bash
 
-set -e
+set -evx
 
 this_ip="$1"; shift
 this_machine="$1"; shift
 consul_args="$@"
 
-etcdctl="docker run --net=host --rm --entrypoint=/etcdctl quay.io/coreos/etcd:v2.1.2"
+etcdctl="docker run --net=host --rm --entrypoint=/etcdctl quay.io/coreos/etcd:v2.2.0"
 conntrack="docker run --net=host --privileged --rm cap10morgan/conntrack"
 
 function leave-cluster {
@@ -30,4 +30,4 @@ fi
 
 ${etcdctl} set /consul.io/bootstrap/machines/${this_machine} ${this_ip} > /dev/null
 
-/bin/start --server --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
+consul agent  --server --data-dir /data --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
