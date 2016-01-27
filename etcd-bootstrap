@@ -30,4 +30,4 @@ fi
 
 ${etcdctl} set /consul.io/bootstrap/machines/${this_machine} ${this_ip} > /dev/null
 
-consul agent  --server --data-dir /data --bootstrap-expect 3 --advertise ${this_ip} ${join_arg} $@
+consul agent  --server --data-dir /data --bootstrap-expect 3 --ui --ui-dir /ui --advertise ${this_ip} ${join_arg} $@
