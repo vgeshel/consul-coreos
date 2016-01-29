@@ -13,7 +13,8 @@ RUN curl -L --retry 5 --retry-delay 1 -o /tmp/docker.tgz https://get.docker.com/
     rm -rf /tmp/docker && rm -rf /tmp/docker.tgz
 
 COPY ./etcd-bootstrap /bin/etcd-bootstrap
-COPY config/* /consul/config/
+COPY ./start /bin/start
+COPY ./agent /bin/agent
 
-ENTRYPOINT ["/bin/etcd-bootstrap"]
-CMD [""]
+ENTRYPOINT ["/bin/start"]
+CMD []
