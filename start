@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ -z "$CONSUL_MODE" ]]
+then
+    mode=$1; shift
+else
+    mode=$CONSUL_MODE
+fi
+
+case $mode in
+    server)
+        exec /bin/etcd-bootstrap $@
+        ;;
+    agent)
+        exec /bin/agent $@
+        ;;
+    *)
+        echo "Either the first argument or the CONSUL_MODE environment var must be set to either 'agent' or 'server'"
+        exit 1
+        ;;
+esac

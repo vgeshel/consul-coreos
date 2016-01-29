@@ -15,6 +15,8 @@ RUN wget -O /tmp/ui.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/
     rm /tmp/ui.zip
 
 COPY ./etcd-bootstrap /bin/etcd-bootstrap
+COPY ./start /bin/start
+COPY ./agent /bin/agent
 
-ENTRYPOINT ["/bin/etcd-bootstrap"]
+ENTRYPOINT ["/bin/start"]
 CMD []

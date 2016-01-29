@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -evx
+
+this_ip="$1"; shift
+join_ip="$1"; shift
+
+exec consul agent --data-dir /data --advertise ${this_ip} --join ${join_ip} $@
