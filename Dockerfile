@@ -1,5 +1,7 @@
-FROM progrium/consul:latest
+FROM consul:v0.7.0
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
+
+RUN apk add --update bash && rm -rf /var/cache/apk/*
 
 ENV GOMAXPROCS 10
 ENV DOCKER_VERSION 1.10.3
