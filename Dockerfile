@@ -10,6 +10,7 @@ ADD https://get.docker.io/builds/Linux/x86_64/docker-${DOCKER_VERSION} /bin/dock
 RUN chmod +x /bin/docker
 
 COPY ./etcd-bootstrap /bin/etcd-bootstrap
+COPY config/* /consul/config/
 
 ENTRYPOINT ["/bin/etcd-bootstrap"]
 CMD []
