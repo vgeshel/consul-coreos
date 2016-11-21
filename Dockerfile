@@ -1,4 +1,4 @@
-FROM consul:v0.7.0
+FROM consul:v0.7.1
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
 RUN apk add --update bash && rm -rf /var/cache/apk/*
