@@ -4,7 +4,7 @@ MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 RUN apk add --update bash && rm -rf /var/cache/apk/*
 
 ENV GOMAXPROCS 10
-ENV DOCKER_VERSION 1.10.3
+ENV DOCKER_VERSION 1.11.2
 
 ADD https://get.docker.io/builds/Linux/x86_64/docker-${DOCKER_VERSION} /bin/docker
 RUN chmod +x /bin/docker
