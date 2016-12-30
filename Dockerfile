@@ -16,4 +16,4 @@ COPY ./etcd-bootstrap /bin/etcd-bootstrap
 COPY config/* /consul/config/
 
 ENTRYPOINT ["/bin/etcd-bootstrap"]
-CMD []
+CMD [""]
