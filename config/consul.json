@@ -2,5 +2,6 @@
   "recursors": [
     "8.8.8.8"
   ],
-  "disable_update_check": true
+  "disable_update_check": true,
+  "raft_protocol": 3
 }
