@@ -1,6 +1,6 @@
 {
   "recursors": [
-    "8.8.8.8"
+    "169.254.169.253"
   ],
   "disable_update_check": true,
   "raft_protocol": 3
