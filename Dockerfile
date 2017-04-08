@@ -4,7 +4,7 @@ MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 RUN apk add --update bash && rm -rf /var/cache/apk/*
 
 ENV GOMAXPROCS 10
-ENV DOCKER_VERSION 1.11.2
+ENV DOCKER_VERSION 1.12.6
 
 RUN curl -L --retry 5 --retry-delay 1 -o /tmp/docker.tgz https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz && \
     tar -xz -C /tmp -f /tmp/docker.tgz && \
