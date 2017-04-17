@@ -15,12 +15,8 @@ Environment=DOCKER_REPO=quay.io/democracyworks/consul-coreos
 Environment=VERSION=0.8.0
 Environment=CONTAINER=consul
 
-# make sure /etc/systemd/resolved.conf.d dir exists so we can add Consul's DNS resolver to system
-ExecStartPre=/usr/bin/mkdir -p /etc/systemd/resolved.conf.d
-
 ExecStartPre=-/usr/bin/docker kill ${CONTAINER}
 ExecStartPre=-/usr/bin/docker rm ${CONTAINER}
-ExecStartPre=-/bin/bash -c 'rm /etc/systemd/resolved.conf.d/00-consul-dns.conf && systemctl restart systemd-resolved'
 ExecStartPre=/usr/bin/docker pull ${DOCKER_REPO}:${VERSION}
 
 ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
@@ -30,10 +26,7 @@ ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
   --env "CONSUL_ALLOW_PRIVILEGED_PORTS=1" \
   ${DOCKER_REPO}:${VERSION} ${COREOS_PRIVATE_IPV4} %m'
 
-ExecStartPost=/bin/bash -c 'sleep 1; echo -e "[Resolve]\nDNS=${COREOS_PRIVATE_IPV4}" > /etc/systemd/resolved.conf.d/00-consul-dns.conf && systemctl restart systemd-resolved'
-
 ExecStop=/usr/bin/docker stop ${CONTAINER}
-ExecStopPost=/bin/bash -c 'rm /etc/systemd/resolved.conf.d/00-consul-dns.conf && systemctl restart systemd-resolved'
 ExecStopPost=-/usr/bin/etcdctl rm /consul.io/bootstrap/machines/%m
 
 [X-Fleet]
