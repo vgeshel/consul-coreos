@@ -1,7 +1,7 @@
-FROM consul:0.8.0
+FROM consul:0.8.4
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
-RUN apk add --update bash && rm -rf /var/cache/apk/*
+RUN apk --no-cache add bash
 
 ENV GOMAXPROCS 10
 ENV DOCKER_VERSION 1.12.6
