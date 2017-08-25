@@ -1,5 +1,5 @@
-FROM consul:0.8.4
-MAINTAINER Democracy Works, Inc. <dev@democracy.works>
+FROM consul:0.9.2
+MAINTAINER Vadim Geshel, <vadim@yummly.com>
 
 RUN apk --no-cache add bash
 
