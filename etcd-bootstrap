@@ -29,8 +29,10 @@ fi
 
 ${etcdctl} set /consul.io/bootstrap/machines/${this_machine} ${this_ip} > /dev/null
 
+export CONSUL_ALLOW_PRIVILEGED_PORTS=1
 /usr/local/bin/docker-entrypoint.sh agent --server --ui --bind=0.0.0.0 \
                                     --advertise=${this_ip} \
-                                    --dns-port=53 --client=${this_ip} \
+                                    --dns-port=53 \
+                                    --client=0.0.0.0 \
                                     --bootstrap-expect=${#nodes[@]} \
                                     ${join_arg} $@
